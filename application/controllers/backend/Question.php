@@ -98,7 +98,6 @@ class Question extends CI_Controller {
 	{
 		// 寫入資料庫
 		$input = array(
-			'created_at' => date('Y-m-d H:i:s'),  
 			'updated_at' => $this->input->post('updated_at'), 
 			'description' => $this->input->post('description'), 
 			'display' => $this->input->post('display'),
@@ -129,8 +128,8 @@ class Question extends CI_Controller {
 	{
 		$id = $this->input->get("id");
 		$display_static = $this->input->get("display_static");
-		if($show_static=='open'){
-			$show=2;
+		if($display_static=='open'){
+			$show=0;
 		}else{
 			$show=1;
 		}
@@ -140,8 +139,10 @@ class Question extends CI_Controller {
 		);
 
 		$this->db->where('id', $id);
-		$this->db->update('questions', $input); 
+		$this->db->update('question', $input); 
 	}
+
+	
 }
 
 
