@@ -9,7 +9,6 @@ class Api extends CI_Controller
 
         //抓出題目資料
         $questions=$this->db->order_by('created_at','desc')->get_where('question', array(
-            'display' =>1,
             'recover' =>0,
         ))->result_array();
          // p($this->db->last_query());
@@ -22,6 +21,8 @@ class Api extends CI_Controller
         //題目的option
         foreach ($questions as $key => $question) {
             $questions[$key]['options'] = $this->db->order_by('created_at','desc')->get_where('question_option', array(
+                'display' => 1,
+                'recover'=>0,
                 'question_id' =>$question['id'],
             ))->result_array();
         }
@@ -69,7 +70,8 @@ class Api extends CI_Controller
 
     public function inspect() {
         // 抓取比對的名字
-        $validate_str = $this->input->post('name');
+        $validate_str1 = $this->input->post('name');
+        $validate_str2 = $this->input->post('school');
 
         // 抓取所有不雅字詞字庫
         $inspects = $this->db->get_where('bad_language', array(
@@ -77,11 +79,36 @@ class Api extends CI_Controller
             'recover'=>0
             ))->result_array();
 
+        //判斷name
         // 初始化錯誤狀態為 false
         $error = false;
         foreach ($inspects as $key => $inspect) {
             // 當比對到相同字串時候調整錯誤狀態為 true 
-            if(preg_match("/".$inspect['name']."/i", $validate_str)){
+            if(preg_match("/".$inspect['name']."/i", $validate_str1)){
+                $error = true;
+            }
+        }   
+
+        if($error == true) {
+            $result = array(
+                'error' => "true",
+                'message' => "包含不雅字，請修改"
+            );
+            echo '包含不雅字，請修改 ';
+        } else {
+            $result = array(
+                'error' => "false",
+                'message' => "無不雅字詞" 
+            );
+            echo '無不雅字詞 ';
+        }
+
+        //判斷school
+        // 初始化錯誤狀態為 false
+        $error = false;
+        foreach ($inspects as $key => $inspect) {
+            // 當比對到相同字串時候調整錯誤狀態為 true 
+            if(preg_match("/".$inspect['name']."/i", $validate_str2)){
                 $error = true;
             }
         }   
