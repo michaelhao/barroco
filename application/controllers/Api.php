@@ -82,33 +82,11 @@ class Api extends CI_Controller
         //判斷name
         // 初始化錯誤狀態為 false
         $error = false;
+        
         foreach ($inspects as $key => $inspect) {
-            // 當比對到相同字串時候調整錯誤狀態為 true 
-            if(preg_match("/".$inspect['name']."/i", $validate_str1)){
-                $error = true;
-            }
-        }   
-
-        if($error == true) {
-            $result = array(
-                'error' => "true",
-                'message' => "包含不雅字，請修改"
-            );
-            echo '包含不雅字，請修改 ';
-        } else {
-            $result = array(
-                'error' => "false",
-                'message' => "無不雅字詞" 
-            );
-            echo '無不雅字詞 ';
-        }
-
-        //判斷school
-        // 初始化錯誤狀態為 false
-        $error = false;
-        foreach ($inspects as $key => $inspect) {
-            // 當比對到相同字串時候調整錯誤狀態為 true 
-            if(preg_match("/".$inspect['name']."/i", $validate_str2)){
+            // 同時比對name&school
+            // 其中一個比對到相同字串時候調整錯誤狀態為 true 
+            if(preg_match("/".$inspect['name']."/i", $validate_str1) || preg_match("/".$inspect['name']."/i", $validate_str2)){
                 $error = true;
             }
         }   
