@@ -53,8 +53,8 @@ function sortUrl(url, id) {
     });
 }
 
-function showUrl(url, id, show_static) {
-	if(show_static=="open"){
+function showUrl(url, id, display_static) {
+	if(display_static=="open"){
 			$("#open"+id).hide();
 			$("#close"+id).show();
 
@@ -67,11 +67,38 @@ function showUrl(url, id, show_static) {
         type: "get",
         data : {
             'id' : id,
-            'show_static' : show_static,
+            'display_static' : display_static,
         },
         success: function(data, textStatus, jqXHR)
         {
         	
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+        }
+    });
+}
+
+
+function showUrl1(url, id, correct_static) {
+    if(correct_static=="open"){
+            $("#open"+id).hide();
+            $("#close"+id).show();
+
+    }else{
+            $("#open"+id).show();
+            $("#close"+id).hide();
+    }
+    $.ajax({
+        url : url,
+        type: "get",
+        data : {
+            'id' : id,
+            'correct_static' : correct_static,
+        },
+        success: function(data, textStatus, jqXHR)
+        {
+            
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
