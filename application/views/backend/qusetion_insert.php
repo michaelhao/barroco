@@ -65,7 +65,7 @@ echo $this->form_builder->build_form_horizontal(
 	        'type' => 'dropdown',
 	        'label' => '上架狀態:',
 	        'class' => 'required select',
-	        'options' => array( 1=>'顯示', 2 =>'隱藏',),
+	        'options' => array( 1=>'顯示', 2 =>'隱藏'),
 	    ),
 	), $row);
 ?>
