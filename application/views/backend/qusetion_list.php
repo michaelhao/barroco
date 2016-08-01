@@ -21,6 +21,7 @@ $articles = $CI->image->getImage($articles);
 					<th>日期</th>
 					<th>圖片</th>
 					<th>簡述</th>
+					<th>顯示/隱藏</th>
 					<th>功能</th>
 				</tr>
 			</thead>
@@ -33,12 +34,30 @@ $articles = $CI->image->getImage($articles);
 						<td>
 							<?php if(!empty($article["pic"])) { ?>
 							<a href="<?=$article["pic"];?>" class="lightbox">
-								<img src="<?=$article["pic"];?>" alt="" class="img-media">
+							<img src="<?=$article["pic"];?>" alt="" class="img-media">
 							</a>
 							<?php } ?>
 						</td>
+
 						<td><?=$article["description"];?></td>
-						
+						<td>
+							<?php if ($article['display'] == 1) { ?>
+								<a href='###' id='open<?=$article["id"]?>' class='btn btn-success rightCHK' onclick="showUrl('question/display','<?=$article["id"]?>','open')">
+								<span class='icon-user-plus2'></span>顯示</a>
+
+								<a style = "display:none" href='###' id='close<?=$article["id"]?>' class='btn btn-danger rightCHK' onclick="showUrl('question/display','<?=$article["id"]?>','close')">
+								<span class='icon-user-plus2'></span>隱藏</a>
+								
+							<?php }else{ ?>
+
+								<a style = "display:none" href='###' id='open<?=$article["id"]?>' class='btn btn-success rightCHK' onclick="showUrl('question/display','<?=$article["id"]?>','open')">
+								<span class='icon-user-plus2'></span>顯示</a>
+
+								<a href='###' id='close<?=$article["id"]?>' class='btn btn-danger rightCHK' onclick="showUrl('question/display','<?=$article["id"]?>','close')">
+								<span class='icon-user-plus2'></span>隱藏</a>
+							<?php } ?>
+						</td>
+
 						<td>
 							<div class="btn-group" >
 								<a href="<?=$modify . "&id=" . $article["id"];?>" class="btn btn-icon btn-danger modifybu"><i class="icon-wrench2"></i></a>
