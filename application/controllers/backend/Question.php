@@ -133,9 +133,10 @@ class Question extends CI_Controller {
 		}else{
 			$show=1;
 		}
+
+		// 寫入資料庫
 		$input=array(
 			'display' => $show,
-			'created_at' => date('Y-m-d H:i:s'),
 		);
 
 		$this->db->where('id', $id);
