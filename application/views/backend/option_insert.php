@@ -2,9 +2,12 @@
 include("layout/insert_partials.php");
 include("layout/fileupload_partials.php");
 // 取出索引欄位中的資料值
-$id=$this->input->get("id");
-// p($id);
-$row=$this->db->get_where('question', array('id' => $id))->row_array();
+$question_id=$this->input->get("question_id");
+// p($question_id);
+$row=$this->db->get_where('question', array(
+	'id' => $id,
+	))->row_array();
+// p($row);
 $question=$row['question_id'];
 $question_options=$this->db->order_by('id')->get_where('question_option', array(
 	'recover' => 0,
@@ -36,23 +39,27 @@ echo $this->form_builder->build_form_horizontal(
 	        'value' => $this->input->get('ipanel')
 	    ),
 	    array(
-	        'id' => 'question_id',
-	        'type' => 'hidden',
-	        'value' => $this->input->get('question_id')
-	    ),
-	    array(
 	        'id' => 'description',
 	        'label' => '題目選項:',
 	        'class' => 'required',
 	    ),
 	    array(
 	        'id' => 'correct',
+	        'type' => 'dropdown',
 	        'label' => '是否正確:',
-	        'class' => 'required',
-	        'value' => $this->input->get('correct')
-	    )
+	        'class' => 'required select',
+	        'options' => array( 0=>'不正確', 1 =>'正確',),
+	    ),
 ), $row);
-// p($this->input->get('question_id'));
+
+$panel = 21;
+$form_end_button = '
+<div class="form-actions text-right">
+	<input type="button" value="回前一頁" class="btn btn-warning" onclick="window.location.href = \''.site_url('backend/page?mpanel=').$panel."&id=".$question_id.'\'">
+	<input type="submit" value="確認" class="btn btn-primary"
+		onclick=""
+	>
+</div>';
 // End Buttonta
 echo $form_end_button;
 // End Form
