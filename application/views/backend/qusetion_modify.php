@@ -1,14 +1,14 @@
 <?php
 include("layout/modify_partials.php");
+include("layout/list_partials.php");
 include("layout/fileupload_partials.php");
 // 取出索引欄位中的資料值
 $id=$this->input->get("id");
 // p($id);
-// p($id=$this->input->get("id"));
-$row=$this->db->get_where('question', array('id' => $id,))->row_array();
+$row=$this->db->get_where('question', array(
+	'id' => $id,
+	))->row_array();
 // p($row);
-$question_options=$row['id'];
-// p($question_options);
 
 $question_options=$this->db->order_by('id', 'desc')->get_where('question_option', array(
 	'question_id' => $row['id'],
@@ -58,7 +58,7 @@ echo $this->form_builder->build_form_horizontal(
 	        'type' => 'dropdown',
 	        'label' => '上架狀態:',
 	        'class' => 'required select',
-	        'options' => array( 1=>'顯示', 2 =>'隱藏',),
+	        'options' => array( 1=>'顯示', 2 =>'隱藏'),
 	    ),
 ), $row);
 // End Button
@@ -104,7 +104,25 @@ $type=$row_submenu_2["typelink"];
 			?>
 				<tr>
 					<td><?=$question_option['description']?></td>
-					<td><?=$question_option['correct']?></td>
+					<td>
+
+						<?php if ($question_option['correct'] == 1) { ?>
+								<a href='###' id='open<?=$question_option["id"]?>' class='btn btn-success rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','open')">
+								<span class='icon-user-plus2'></span>正確</a>
+
+								<a style = "display:none" href='###' id='close<?=$question_option["id"]?>' class='btn btn-danger rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','close')">
+								<span class='icon-user-plus2'></span>不正確</a>
+								
+							<?php }else{ ?>
+
+								<a style = "display:none" href='###' id='open<?=$question_option["id"]?>' class='btn btn-success rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','open')">
+								<span class='icon-user-plus2'></span>正確</a>
+
+								<a href='###' id='close<?=$question_option["id"]?>' class='btn btn-danger rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','close')">
+								<span class='icon-user-plus2'></span>不正確</a>
+							<?php } ?>
+						
+					</td>
 
 					<td>
 							<div class="btn-group" >
