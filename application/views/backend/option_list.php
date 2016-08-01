@@ -1,14 +1,21 @@
 <?php
 include("layout/list_partials.php");
 
-// 取出索引欄位中的資料值
+//抓出question_option的id(抓不到)
+// $question_option =$this->db->get_where('question_option', array(
+// 	'recover'=>0,
+// 	))->row_array();
+//question['id']比對question_option['question_id']
+// $question =$this->db->get_where('question', array(
+// 	'id' => $question_option['question_id']
+// 	))->row_array();
+// p($question['id']);
 
-$panel= 21;
-// $id = $this->input->get('id');
+// $panel= 21;
+// $id = $question['id'];
 
-$row=select_submenu($panel);
-redirect($row["link"]."&panel=".$panel, 'refresh');
-// redirect($row["modifylink"]."&mpanel=".$panel."&id=".$id, 'refresh');
+// $row=select_submenu($panel);
+// redirect($row["modifylink"]."&id=".$id, 'refresh');
 ?>
 
 <!--Datatable with tools menu -->
@@ -22,7 +29,7 @@ redirect($row["link"]."&panel=".$panel, 'refresh');
 	</div>
 </div>
 	<!-- /datatable with tools menu -->
-<script>
+<!-- <script>
 $(function() {
     $( "#date #date_from" ).datepicker();
     $( "#date #date_to" ).datepicker();
@@ -39,4 +46,4 @@ function sel_acc(acc)
 { 
     window.location = "<?=site_url('backend/page?panel=6&acc='); ?>"+acc;
 }
-</script>
+</script> -->
