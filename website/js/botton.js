@@ -12,5 +12,6 @@ $(function() {
 	hrefDelay($('.logo a'),('login.html'));
 	hrefDelay($('.selectQaBtn'),('qa_game.html'));
 	hrefDelay($('.selectMapBtn'),('map_game.html'));
+	hrefDelay($('.homeBtn'),('login.html'));
 	hrefDelay($('.qaPlayagain'),('qa_game.html'));
 });
