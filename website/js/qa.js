@@ -483,8 +483,4 @@ $(function(){
 	};
 
 	qaGame(questions);
-
-	$('.qaPlayagain').click(function(){
-		window.location.assign('qa_game.html');
-	});
 });
