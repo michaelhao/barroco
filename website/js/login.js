@@ -1,4 +1,6 @@
 $(function(){
+	var userName='';
+	var userSchool='';
 	var errorTxt='中英文合計20字內';
 	$('#loginForm p').text(errorTxt);
 	$('input').focus(function(){
@@ -47,14 +49,16 @@ $(function(){
 		
 		inputCheck('school');
 		inputCheck('name');
+		userName=$('#name').val();
+		userSchool=$('#school').val();
 
 		var schoolInput=$('#school').val().length;
 		var nameInput=$('#name').val().length;
 		if(schoolInput != 0 && nameInput != 0){
 			//check error text
 			var input={
-				'school':$('#school').val(),
-				'name':$('#name').val(),
+				'school':userSchool,
+				'name':userName
 			};
 			console.log(input);
 			// $.post('../api/inspect',input,function(data){
