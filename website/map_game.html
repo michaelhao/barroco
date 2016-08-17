@@ -13,18 +13,35 @@
 	<link rel="stylesheet" type="text/css" href="css/reset.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script src="js/botton.js"></script>
-	<script src="js/qa.js"></script>
+	<script src="js/map.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#mapBtn1').click(function(){
+				$(this).find('path').css('fill',"#f00");
+			});
+		});
+	</script>
 
 </head>
 
-<body id="game" class="bg2">
+<body id="game" class="bg3">
 	<audio id="win"><source src="sounds/win.mp3"></source></audio>
 	<audio id="fail"><source src="sounds/fail.mp3"></source></audio>
 	<audio id="mySoundClip"><source src="sounds/button.mp3"></source></audio>
 	<div class="logo"><a><img src="imgs/logo.png"></a></div>
-	<section id="qaGame">
-		<div class="timer">15</div>
-		<ul class="qaList">
+	<section id="mapGame">
+		<ul class="mapTitle">
+			<li class="t1"><img src="imgs/map_title1.jpg"></li>
+			<li class="t2"><img src="imgs/map_title2.jpg"></li>
+			<li class="t3"><img src="imgs/map_title3.jpg"></li>
+		</ul>
+		<ul class="mapBtnBar">
+			<li class="mapChallengeBtn" style="display: none;"><a><img src="imgs/challenge_btn.png"></a></li>
+			<li class="mapAnwserBtn" style="display: none;"><a><img src="imgs/see_anwser_btn.png"></a></li>
+			<li class="mapNextBtn" style="display: none;"><a><img src="imgs/challenge_next_btn.png"></a></li>
+			<li class="mapScoreBtn"><a><img src="imgs/map_score_btn.png"></a></li>
+		</ul>
+		<ul class="mapList">
 			
 		</ul>
 	</section>
@@ -32,9 +49,9 @@
 	<section id="scoreList">
 		<div class="btnBox">
 			<a class="homeBtn"><img src="imgs/game_home.png"></a>
-			<a class="qaPlayagain"><img src="imgs/qa_playagain.png"></a>
+			<a class="mapPlayagain"><img src="imgs/map_playagain.png"></a>
 		</div>
-		<div class="qaScoreList">
+		<div class="mapScoreList">
 			<ul class="table">
 				<li class="th">
 					<div><span>分數</span></div>

@@ -1,8 +1,8 @@
 @charset "utf-8";
 .hide {font-size:0; line-height:0; color:#fff; text-indent:-5000px; }
 *:focus {outline: 0;}
-/* Change the white to any color ;) */
-html{overflow:hidden;}
+/* Change the white to any color ;) 
+html{overflow:hidden;}*/
 body{font-size:32px; line-height:48px; color:#000; background:#000; background-size:100% auto; background:#000;}
 input:-webkit-autofill {-webkit-box-shadow: 0 0 0px 1000px #fff7f8 inset;-webkit-text-fill-color: #666 !important;}
 input{background:#fff; color:#666; padding:15px 20px; width:730px; height:50px; font-size:40px; line-height:40px; -webkit-border-radius:10px; -moz-border-radius:10px; border-radius:10px; border:none; box-shadow:none; font-family:"微軟正黑體","Microsoft JhengHei","Helvetica Neue",Helvetica,Arial,sans-serif,"Apple LiGothic";}
@@ -26,15 +26,16 @@ button{box-shadow:none; border:none; font-family:"微軟正黑體","Microsoft Jh
 #scoreList > div{float:left; width:510px;}
 #scoreList .btnBox{padding:856px 0 0 60px;}
 .homeBtn{margin-right:20px;}
-#scoreList .qaScoreList{padding:280px 0 0 110px;}
+#scoreList > div:nth-child(2){padding:280px 0 0 110px;}
 #scoreList .table{width:1037px;}
 #scoreList .table li div{border-bottom:4px solid #808080; padding:8px 24px 0 10px; width:260px; word-wrap:break-word; word-break:break-all;}
-#scoreList .qaScoreList .table li div span{box-sizing:border-box; margin-right:14px;}
-#scoreList .qaScoreList .table li div:nth-child(1){width:190px;}
-#scoreList .qaScoreList .table li div:nth-child(4){width:327px;}
-#scoreList .qaScoreList .table li div:last-child span{margin:0;}
-#scoreList .qaScoreList .table li.th div{border:none; padding:0;}
-#scoreList .qaScoreList .table li.th div span{background:#7f4f8e; color:#fff; padding:5px 10px; display:block;}
+#scoreList .table li div span{box-sizing:border-box; margin-right:14px;}
+#scoreList .table li div:nth-child(1){width:190px;}
+#scoreList .table li div:nth-child(4){width:327px;}
+#scoreList .table li div:last-child span{margin:0;}
+#scoreList .table li.th div{border:none; padding:0;}
+#scoreList .table li.th div span{ color:#fff; padding:5px 10px; display:block;}
+#scoreList .qaScoreList .table li.th div span{background:#7f4f8e;}
 #scoreList .mapScoreList .table li.th div span{background:#00768f;}
 #game .fancybox-close {background: url('../imgs/score_close_btn.png') 0 0 no-repeat; top: 54px;	right: 54px; width: 50px; height: 50px;}
 #game .fancybox-overlay {background: url('../imgs/fancybox_overlay.png');}
@@ -43,7 +44,6 @@ button{box-shadow:none; border:none; font-family:"微軟正黑體","Microsoft Jh
 .scoreTxt{position:absolute; top:150px; left:370px; width:490px;}
 .ScoreCloseBtn{position:absolute; bottom:120px; right:10px;}
 .scoreTitle, .scoreNum{color:#f00; font-size:58px;}
-
 
 /*====== login ======*/
 a.loginBtn{width:567px; height:567px; top:440px; left:670px;}
@@ -80,7 +80,35 @@ ul.qaList > li > div{float:left;}
 .qaA1 a{background:#32b16c;}
 .qaA2 a{background:#00a0e9;}
 .qaA3 a{background:#8f82bc;}
-.qaNote{font-size:20px; line-height:30px; text-align:right; padding:0 55px; position:absolute; bottom:0;}
-.qaNote:after{content:" "; border-color:transparent transparent transparent #000; border-style:solid solid solid solid; border-width:13px; position:absolute; top:0; right:18px;}
+.qaNote, .mapPicNote{font-size:20px; line-height:30px; text-align:right; padding:0 55px; position:absolute; bottom:0;}
+.qaNote:after,.mapPicNote:after{content:" "; border-color:transparent transparent transparent #000; border-style:solid solid solid solid; border-width:13px; position:absolute; top:0; right:18px;}
 .qaPic{width:737px; height:627px; margin:2px 0 0 76px; display:table-row; vertical-align:middle; box-sizing:border-box;}
 .qaPic img{margin:auto; width:auto;}
+
+/*====== map ======*/
+.mapTitle{width:83px; height:33px; position:absolute; top:260px; left:400px;}
+.mapList > li{overflow:hidden;}
+.mapTxt{float:left; width:810px; padding:370px 0 0 215px; color:#92241a;}
+.txt1{color:#000;}
+.mapPic{float:left; padding:293px 0 0 40px; width:632px; height:706px;}
+.mapPic a{position:absolute;z-index:2;}
+.mapA0{top:20px; left:170px;}
+.mapPic1{top:85px;}
+.mapA1{border:12px solid #fff;  -webkit-border-radius:40px; -moz-border-radius:40px; border-radius:40px; width:40px; height:40px; top:202px; right:47px;}
+.mapPic2{top:80px;}
+.mapA2{top:313px; left:82px; overflow:auto;}
+.mapA2:after,.mapA2:before{content:""; display:block; border:12px solid #fff;  -webkit-border-radius:120px; -moz-border-radius:120px; border-radius:120px; width:120px; height:120px; float:left;}
+.mapA2:before{margin-top:28px;}
+.mapA2:after{margin-left:70px;}
+.mapPic3{top:85px;}
+.mapA3{border:12px solid #fff;  -webkit-border-radius:60px; -moz-border-radius:60px; border-radius:60px; width:200px; height:60px; top:19px; left:90px;}
+.mapA4{border:12px solid #fff;  -webkit-border-radius:60px; -moz-border-radius:60px; border-radius:60px; width:250px; height:200px; top:137px; right:82px;}
+
+.mapPic img{width:auto; cursor:pointer; margin:auto;}
+.mapPicNote{position:absolute; left:-580px; width:500px; z-index:2; bottom:170px;}
+.answerBtn{position:absolute; width:100%; height:100%; z-index:2;}
+.answerBtn > a{position:absolute;}
+.mapBtnBar{position:absolute; bottom:100px; left:320px; z-index:3;}
+.mapChallengeBtn,.mapScoreBtn{width:483px; height:130px;}
+.mapAnwserBtn{width:259px; height:267px; top:130px; left:310px;}
+.mapNextBtn{width:374px; height:127px; left:110px;}
