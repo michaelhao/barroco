@@ -210,6 +210,13 @@ $(function(){
 			
 			console.log('idNum:'+idNum);
 		});
+		$('.mapScoreBtn').click(function(){
+				$('#win')[0].pause();
+				$('#fail')[0].pause();
+				$('#win')[0].currentTime = 0;
+				$('#fail')[0].currentTime = 0;
+				scoreList(scoreData,name,school,userScore);
+			});
 
 		//show answer
 		function loop(i){
@@ -223,9 +230,7 @@ $(function(){
 			if(idNum<4){
 				$('.mapNextBtn').show();
 			}else{
-				$('.mapScoreBtn').show().click(function(){
-					scoreList(scoreData,name,school,userScore);
-				});
+				$('.mapScoreBtn').show();
 			};
 			$('.mapA'+idNum).off('click');
 			$('#map'+idNum+' .txt2,.t2').hide();
