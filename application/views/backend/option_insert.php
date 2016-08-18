@@ -39,6 +39,11 @@ echo $this->form_builder->build_form_horizontal(
 	        'value' => $this->input->get('ipanel')
 	    ),
 	    array(
+	        'id' => 'question_id',
+	        'type' => 'hidden',
+	        'value' => $this->input->get("question_id")
+	    ),
+	    array(
 	        'id' => 'description',
 	        'label' => '題目選項:',
 	        'class' => 'required',
