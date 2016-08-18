@@ -33,9 +33,18 @@ class Api extends CI_Controller
                 'recover'=>0,
                 'question_id' =>$question['id'],
             ))->result_array();
+
+            foreach ($questions[$key]['options'] as $key2 => $value) {
+                if ($questions[$key]['options'][$key2]['correct']==0) {
+                    $questions[$key]['options'][$key2]['correct'] = false;
+                }else{
+                    $questions[$key]['options'][$key2]['correct'] = true;
+                }
+            }
+
         }
 
-        $questions = $this->array_random($questions, 2);//隨機取得十題題目
+        // $questions = $this->array_random($questions, 10);//隨機取得十題題目
         echo json_encode($questions);
         exit;
     }
