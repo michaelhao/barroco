@@ -37,6 +37,7 @@ class Question_option extends CI_Controller {
 			'description' => $this->input->post('description'),
 			'question_id' => $question_id,
 			'created_at' => date('Y-m-d H:i:s'), 
+			'correct' => $this->input->post('correct'),
 		);
 		// 寫入資料庫
 		$this->db->insert('question_option', $input);
