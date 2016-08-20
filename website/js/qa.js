@@ -379,23 +379,44 @@ $(function(){
 			qaId.find('a').off('click').css({background:'#ccc',cursor:'default'});//all button click off, change background to #ccc
 			qaId.find('.'+qaA+' a').css({background:'#f00',fontSize:'40px',padding:'10px'});//just for answer style
 			setTimeout(function(){
-				qaId.hide();
-				idNum++;
+				if(idNum >= qaLength){
+					// gameOver();
+					idNum=qaLength;
+					$('.winName').text(name);
+ 					$('.scoreNum').text(userScore);
+					$.fancybox('#scoreBox',{
+						'scrolling' : 'no',
+						'titleShow' : false,
+						'padding' : 0,
+						'closeBtn':false,
+						helpers : { 
+					        overlay : {closeClick: false}
+					    }
+					});
+				}else{
+					qaId.hide();
+					idNum++;
+					timer(gameTime,idNum);	
+				}
 				$('#q'+idNum).show();
 				$('#win')[0].pause();
 				$('#fail')[0].pause();
 				$('#win')[0].currentTime = 0;
 				$('#fail')[0].currentTime = 0;
-				if(idNum > qaLength){
-					gameOver();
-					idNum=0;
-					return false;
-				};
-			answered=false;
-			timer(gameTime,idNum);
-			console.log('idNum:'+idNum);
+				answered=false;
+				console.log('idNum:'+idNum);
 			},3000);
 		};
+
+		//light box button
+		$('.ScoreCloseBtn').click(function(){
+			$.fancybox.close();
+			idNum=0;
+			gameOver();
+		});
+		$('.fancybox-close').click(function(){
+			window.location.assign('select.html');
+		});
 
 		//timer events
 		function timer(t,q){
@@ -433,13 +454,13 @@ $(function(){
 		
 		//game over show score list
 		function gameOver(){
-			scoreList(scoreData,name,school,userScore);
+			scoreList(scoreData,name,school);
 		};
 		console.log(answerA);
 	};
 
 	//score events
-	function scoreList(data,name,school,scoreNum){
+	function scoreList(data,name,school){
  		//post data
  		var qaData={
  			'name':name,
@@ -451,16 +472,6 @@ $(function(){
  		$('#qaGame').hide();
 		$('body').addClass('bg4');
 		$('#scoreList').show();
- 		$('.winName').text(name);
- 		$('.scoreNum').text(scoreNum);
- 		$.fancybox('#scoreBox',{
-			'scrolling' : 'no',
-			'titleShow' : false,
-			'padding' : 0
-		});
-		$('.ScoreCloseBtn').click(function(){
-			$.fancybox.close();
-		});
 		for(var i=0;i<=9;i++){
 			$('#scoreList .table').append('<li>'+
 					'<div><span>'+data[i].score+'</span></div>'+
