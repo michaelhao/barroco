@@ -51,6 +51,8 @@ $(function(){
 		inputCheck('name');
 		userName=$('#name').val();
 		userSchool=$('#school').val();
+		$.session.set("name", userName);
+		$.session.set("school", userSchool);
 
 		var schoolInput=$('#school').val().length;
 		var nameInput=$('#name').val().length;
@@ -61,16 +63,27 @@ $(function(){
 				'name':userName
 			};
 			console.log(input);
-			// $.post('../api/inspect',input,function(data){
-				//test array
-				var error=[true,false];
-				if(error[1]){
+			//----不雅字詞驗證----
+			$.post('http://localhost/fc/barroco/index.php/api/inspect',input,function(data){
+				// test array
+				var inspect = JSON.parse(data);
+				if(inspect.error){//error = false ：無不雅字詞
+					console.log(inspect.message);
 					$('#loginForm').hide();
 					$('#loginError').show();
 				}else{
+					console.log(inspect.message);
 					setTimeout(function(){window.location.assign("select.html");},100);
-				};
-			// });
+				}
+				// var error=[true,false];
+				// if(error[1]){//有不雅字詞->顯示錯誤訊息
+				// 	$('#loginForm').hide();
+				// 	$('#loginError').show();
+				// }else{//無不雅字詞->開始遊戲
+				// 	setTimeout(function(){window.location.assign("select.html");},100);
+				// };
+			});
+			//----不雅字詞驗證----
 		}
 
 		/*var errorTxtArray=["/","?"];

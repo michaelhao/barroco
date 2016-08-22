@@ -129,7 +129,6 @@ $(function(){
 	var mapLength=4;//question length 0~9 total 10 list
 	var userScore=0;
 	var idNum=0;//in which one question, now
-	var gameOver=false;
 	var name='王小明';
 	var school='中崙國中';
 	var time='105.08/22 15:02';
@@ -157,9 +156,9 @@ $(function(){
 			$(mapId).hide();
 			//answer button event
 			$('.mapA'+i).click(function(){
+				userScore+=20;
 				showAnswer();
 				loop(1);
-				userScore+=20;
 				$('#win')[0].play();
 				console.log('userScore:'+userScore);
 				console.log('idNum:'+idNum);
@@ -210,13 +209,15 @@ $(function(){
 			
 			console.log('idNum:'+idNum);
 		});
-		$('.mapScoreBtn').click(function(){
-				$('#win')[0].pause();
-				$('#fail')[0].pause();
-				$('#win')[0].currentTime = 0;
-				$('#fail')[0].currentTime = 0;
-				scoreList(scoreData,name,school,userScore);
-			});
+
+		//light box button
+		$('.ScoreCloseBtn').click(function(){
+			$.fancybox.close();
+			gameOver();
+		});
+		$('.fancybox-close').click(function(){
+			window.location.assign('select.html');
+		});
 
 		//show answer
 		function loop(i){
@@ -230,7 +231,18 @@ $(function(){
 			if(idNum<4){
 				$('.mapNextBtn').show();
 			}else{
-				$('.mapScoreBtn').show();
+				//$('.mapScoreBtn').show();
+				$('.winName').text(name);
+ 				$('.scoreNum').text(userScore);
+				$.fancybox('#scoreBox',{
+					'scrolling' : 'no',
+					'titleShow' : false,
+					'padding' : 0,
+					'closeBtn':false,
+					helpers : { 
+					    overlay : {closeClick: false}
+				    }
+				});
 			};
 			$('.mapA'+idNum).off('click');
 			$('#map'+idNum+' .txt2,.t2').hide();
@@ -241,12 +253,16 @@ $(function(){
 
 		//game over show score list
 		function gameOver(){
-			scoreList(scoreData,name,school,userScore);
+			scoreList(scoreData,name,school);
 		};
 	};
 
 	//score events
 	function scoreList(data,name,school,scoreNum){
+		$('#win')[0].pause();
+		$('#fail')[0].pause();
+		$('#win')[0].currentTime = 0;
+		$('#fail')[0].currentTime = 0;
  		//post data
  		var mapData={
  			'name':name,
@@ -258,13 +274,6 @@ $(function(){
  		$('#mapGame').hide();
 		$('body').addClass('bg5');
 		$('#scoreList').show();
- 		$('.winName').text(name);
- 		$('.scoreNum').text(scoreNum);
- 		$.fancybox('#scoreBox',{
-			'scrolling' : 'no',
-			'titleShow' : false,
-			'padding' : 0
-		});
 		$('.ScoreCloseBtn').click(function(){
 			$.fancybox.close();
 		});

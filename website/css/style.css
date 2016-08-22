@@ -37,7 +37,7 @@ button{box-shadow:none; border:none; font-family:"微軟正黑體","Microsoft Jh
 #scoreList .table li.th div span{ color:#fff; padding:5px 10px; display:block;}
 #scoreList .qaScoreList .table li.th div span{background:#7f4f8e;}
 #scoreList .mapScoreList .table li.th div span{background:#00768f;}
-#game .fancybox-close {background: url('../imgs/score_close_btn.png') 0 0 no-repeat; top: 54px;	right: 54px; width: 50px; height: 50px;}
+#game .fancybox-close {position:absolute; background: url('../imgs/score_close_btn.png') 0 0 no-repeat; top: 54px;	right: 54px; width: 50px; height: 50px;}
 #game .fancybox-overlay {background: url('../imgs/fancybox_overlay.png');}
 #game .fancybox-skin{-webkit-border-radius:0; -moz-border-radius:0; border-radius:0;}
 #scoreBox{width:932px; height:670px; background: url('../imgs/score_bg.jpg'); font-size:40px; line-height:62px;}

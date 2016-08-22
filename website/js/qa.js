@@ -1,5 +1,13 @@
 $(function(){
-	var questions=[
+	//----api要十題題目----
+	var questions;
+	$.post("http://localhost/fc/barroco/index.php/api/questions", function(data){
+		questions = JSON.parse(data);
+		console.log(questions);
+		qaGame(questions);//開始快問快答
+	});
+	//----api要十題題目----
+	var question=[
 	  {
 	    "description": "第二次世界大戰誰沒有參加",
 	    "pic": "imgs/qa_pic1.jpg",
@@ -241,6 +249,7 @@ $(function(){
 	    ]
 	  }
 	];
+	
 	var scoreData=[
 		{
 			'school':'甌八瑪',
@@ -313,8 +322,8 @@ $(function(){
 	var answered=false;//button was clicked
 	var gameTime=15;//Set the length of time
 	var gameOver=false;
-	var name='王小明';
-	var school='中崙國中';
+	var name=$.session.get("name");//從login.js接進來
+	var school=$.session.get("school");
 	var time='105.08/22 15:02';
 
 	function qaGame(data){
@@ -335,7 +344,7 @@ $(function(){
 							'<li class="qaNote">'+data[i].note+
 						'</ul>'+
 					'</div>'+
-					'<div class="qaPic"><img src='+data[i].pic+'></div>'+
+					'<div class="qaPic"><img src="'+data[i].pic+'"></div>'+
 				'</li>');
 			$('#q'+i).css('opacity',0);
 
@@ -379,23 +388,44 @@ $(function(){
 			qaId.find('a').off('click').css({background:'#ccc',cursor:'default'});//all button click off, change background to #ccc
 			qaId.find('.'+qaA+' a').css({background:'#f00',fontSize:'40px',padding:'10px'});//just for answer style
 			setTimeout(function(){
-				qaId.hide();
-				idNum++;
+				if(idNum >= qaLength){
+					gameOver();
+					idNum=qaLength;
+					$('.winName').text(name);
+ 					$('.scoreNum').text(userScore);
+					$.fancybox('#scoreBox',{
+						'scrolling' : 'no',
+						'titleShow' : false,
+						'padding' : 0,
+						'closeBtn':false,
+						helpers : { 
+					        overlay : {closeClick: false}
+					    }
+					});
+				}else{
+					qaId.hide();
+					idNum++;
+					timer(gameTime,idNum);	
+				}
 				$('#q'+idNum).show();
 				$('#win')[0].pause();
 				$('#fail')[0].pause();
 				$('#win')[0].currentTime = 0;
 				$('#fail')[0].currentTime = 0;
-				if(idNum > qaLength){
-					gameOver();
-					idNum=0;
-					return false;
-				};
-			answered=false;
-			timer(gameTime,idNum);
-			console.log('idNum:'+idNum);
+				answered=false;
+				console.log('idNum:'+idNum);
 			},3000);
 		};
+
+		//light box button
+		$('.ScoreCloseBtn').click(function(){
+			$.fancybox.close();
+			idNum=0;
+			// gameOver();
+		});
+		$('.fancybox-close').click(function(){
+			window.location.assign('select.html');
+		});
 
 		//timer events
 		function timer(t,q){
@@ -433,13 +463,32 @@ $(function(){
 		
 		//game over show score list
 		function gameOver(){
-			scoreList(scoreData,name,school,userScore);
+			//----遊戲結束，儲存分數----
+			var score = {
+				'type' : 11,
+				'school' : school,
+				'name' : name,
+				'score' : userScore
+			}
+			$.post("http://localhost/fc/barroco/index.php/api/insert_score", score, function(data){
+				console.log("儲存分數");
+				//----api要前十排行榜----
+				var scoreDatas;
+				$.get("http://localhost/fc/barroco/index.php/api/rank?type=11", function(data2){
+					scoreDatas = JSON.parse(data2);
+					console.log(scoreDatas);
+					scoreList(scoreDatas,name,school);
+				});
+				//----api要前十排行榜----
+			});
+			//----遊戲結束，儲存分數----
+			
 		};
 		console.log(answerA);
 	};
 
 	//score events
-	function scoreList(data,name,school,scoreNum){
+	function scoreList(data,name,school){
  		//post data
  		var qaData={
  			'name':name,
@@ -447,20 +496,10 @@ $(function(){
  			'score':userScore,
  			'time':time
  		};
- 		console.log(qaData);
+ 		console.log(qaData);//要回傳rank的資料
  		$('#qaGame').hide();
 		$('body').addClass('bg4');
 		$('#scoreList').show();
- 		$('.winName').text(name);
- 		$('.scoreNum').text(scoreNum);
- 		$.fancybox('#scoreBox',{
-			'scrolling' : 'no',
-			'titleShow' : false,
-			'padding' : 0
-		});
-		$('.ScoreCloseBtn').click(function(){
-			$.fancybox.close();
-		});
 		for(var i=0;i<=9;i++){
 			$('#scoreList .table').append('<li>'+
 					'<div><span>'+data[i].score+'</span></div>'+
@@ -482,5 +521,5 @@ $(function(){
  		time = yearOfTaiwan+'.'+twoDigitMonth+'/'+twoDigitDate+' '+twoDigitHours+':'+twoDigitMinutes;
 	};
 
-	qaGame(questions);
+	// qaGame(question);
 });

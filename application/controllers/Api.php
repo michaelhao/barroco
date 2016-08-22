@@ -13,7 +13,6 @@ class Api extends CI_Controller
             'recover' =>0,
             'display' =>1,
         ))->result_array();
-         // p($this->db->last_query());
 
         //抓取圖片的method
         $CI =& get_instance();
@@ -44,7 +43,7 @@ class Api extends CI_Controller
 
         }
 
-        // $questions = $this->array_random($questions, 10);//隨機取得十題題目
+        $questions = $this->array_random($questions, 10);//隨機取得十題題目
         echo json_encode($questions);
         exit;
     }
@@ -79,28 +78,24 @@ class Api extends CI_Controller
         );
         //加入哪個資料庫
         $this->db->insert('score', $input); 
-        // $insert_last_id = $this->db->insert_id();
-
-        // $this->db->where('id', $insert_last_id);
-        // $this->db->update('score',$input);
-
-        // flashSuccess('新增資料成功。');
-
-        // 導回原本的頁面
-        // $panel= $this->input->post("panel");
-        // $row=select_submenu($panel);
-        // redirect($row["link"], 'refresh');
     }
 
     //排行榜紀錄前十位就好
     public function rank(){
         //抓出score的資料
         //使用type類別進行分數排列
-        $ranks=$this->db->select('name, school, score, created_at')->order_by('score','desc')->get_where('score', array(
+        $ranks=$this->db->select('name, school, score, MAX(created_at) AS created_at')->group_by(array('school' , 'name', 'score'))->order_by('score','desc')->get_where('score', array(
             'type' => $this->input->get('type'),
             'recover' =>0,
         ), 10)->result_array();
+
         //輸出結果
+        //時間格式  'time':'105.08/22 15:02'  
+        foreach ($ranks as $key => $rank) {
+            $time = date("Y.m/d H:i", strtotime($rank['created_at']));
+            $changeYear = explode(".", $time);
+            $ranks[$key]['time'] = ($changeYear[0]-1911).".".$changeYear[1];
+        }
         echo json_encode($ranks);
         exit;
     }
