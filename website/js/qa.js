@@ -344,7 +344,7 @@ $(function(){
 							'<li class="qaNote">'+data[i].note+
 						'</ul>'+
 					'</div>'+
-					'<div class="qaPic"><img src='+data[i].pic+'></div>'+
+					'<div class="qaPic"><img src="'+data[i].pic+'"></div>'+
 				'</li>');
 			$('#q'+i).css('opacity',0);
 
@@ -389,7 +389,7 @@ $(function(){
 			qaId.find('.'+qaA+' a').css({background:'#f00',fontSize:'40px',padding:'10px'});//just for answer style
 			setTimeout(function(){
 				if(idNum >= qaLength){
-					// gameOver();
+					gameOver();
 					idNum=qaLength;
 					$('.winName').text(name);
  					$('.scoreNum').text(userScore);
@@ -421,7 +421,7 @@ $(function(){
 		$('.ScoreCloseBtn').click(function(){
 			$.fancybox.close();
 			idNum=0;
-			gameOver();
+			// gameOver();
 		});
 		$('.fancybox-close').click(function(){
 			window.location.assign('select.html');
@@ -444,7 +444,7 @@ $(function(){
 		};
 		
 		//question images resize
-		// $('img').imagesLoaded().done( function() {
+		$('img').imagesLoaded().done( function() {
 			for(var i=0;i<=$('.qaList li').length;i++){
 				var qaPic=$('#q'+i+' .qaPic img');
 				var qaPicBox=$('#q'+i+' .qaPic');
@@ -459,7 +459,7 @@ $(function(){
 			};
 			$('#q0').show();//show first question
 			timer(gameTime,idNum);//timer start
-		// });
+		});
 		
 		//game over show score list
 		function gameOver(){
@@ -472,16 +472,17 @@ $(function(){
 			}
 			$.post("http://localhost/fc/barroco/index.php/api/insert_score", score, function(data){
 				console.log("儲存分數");
+				//----api要前十排行榜----
+				var scoreDatas;
+				$.get("http://localhost/fc/barroco/index.php/api/rank?type=11", function(data2){
+					scoreDatas = JSON.parse(data2);
+					console.log(scoreDatas);
+					scoreList(scoreDatas,name,school);
+				});
+				//----api要前十排行榜----
 			});
 			//----遊戲結束，儲存分數----
-			//----api要前十排行榜----
-			var scoreDatas;
-			$.get("http://localhost/fc/barroco/index.php/api/rank?type=11", function(data){
-				scoreDatas = JSON.parse(data);
-				console.log(scoreDatas);
-				scoreList(scoreData,name,school);
-			});
-			//----api要前十排行榜----
+			
 		};
 		console.log(answerA);
 	};

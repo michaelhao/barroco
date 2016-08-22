@@ -44,7 +44,7 @@ class Api extends CI_Controller
 
         }
 
-        // $questions = $this->array_random($questions, 10);//隨機取得十題題目
+        $questions = $this->array_random($questions, 10);//隨機取得十題題目
         echo json_encode($questions);
         exit;
     }
@@ -104,7 +104,10 @@ class Api extends CI_Controller
         //輸出結果
         //時間格式  'time':'105.08/22 15:02'  
         foreach ($ranks as $key => $rank) {
-            // $ranks[$key]['time'] = date("y.m/d H:m", $rank['created_at']);
+            // $ranks[$key]['time'] = date("Y.m/d H:i", strtotime($rank['created_at']));
+            $time = date("Y.m/d H:i", strtotime($rank['created_at']));
+            $changeYear = explode(".", $time);
+            $ranks[$key]['time'] = ($changeYear[0]-1911).".".$changeYear[1];
         }
         echo json_encode($ranks);
         exit;
