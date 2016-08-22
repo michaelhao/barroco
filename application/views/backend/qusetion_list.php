@@ -1,6 +1,6 @@
 <?php
 include("layout/list_partials.php");
-$articles=$this->db->order_by('created_at','desc')->get_where('question', array(
+$articles=$this->db->order_by('created_at','asc')->get_where('question', array(
 	'recover' =>0,
 ))->result_array();
  // p($this->db->last_query());

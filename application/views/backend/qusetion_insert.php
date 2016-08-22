@@ -69,26 +69,27 @@ echo $this->form_builder->build_form_horizontal(
 	        'type' => 'radio',
 	        'options' => array(
                                 array(
-                                        'id' => 'radio_button_yes',
+                                        'id' => 'radio_button_1',
                                         'value' => 1,
                                         'label' => '選項一'
                                 ),
                                 array(
-                                        'id' => 'radio_button_no',
+                                        'id' => 'radio_button_2',
                                         'value' => 2,
                                         'label' => '選項二'
                                 ),
                                 array(
-                                        'id' => 'radio_button_yes',
+                                        'id' => 'radio_button_3',
                                         'value' => 3,
                                         'label' => '選項三'
                                 ),
                                 array(
-                                        'id' => 'radio_button_yes',
+                                        'id' => 'radio_button_4',
                                         'value' => 4,
                                         'label' => '選項四'
                                 ),
                         ),
+
 	        'class' => 'required',
 	    ), 
 	    array(

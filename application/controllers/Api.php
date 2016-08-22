@@ -20,25 +20,36 @@ class Api extends CI_Controller
         $questions = $CI->image->getImage($questions);
 
         //題目的option
-        foreach ($questions as $key => $question) {
-            unset($questions[$key]['created_at']);
-            unset($questions[$key]['updated_at']);
-            unset($questions[$key]['display']);
-            unset($questions[$key]['recover']);
-            unset($questions[$key]['sort']);
-            $questions[$key]['score'] = 10;
-            $questions[$key]['options'] = $this->db->select('description, correct')->get_where('question_option', array(
-                'display' => 1,
-                'recover'=>0,
-                'question_id' =>$question['id'],
-            ))->result_array();
+        foreach ($questions as $key => $value) {
+           $questions[$key]['options'] = array();
+           $questions[$key]['options'][0] = array(
+                'description' => $value['option1'], 
+                'correct' => false, 
+            );
 
-            foreach ($questions[$key]['options'] as $key2 => $value) {
-                if ($questions[$key]['options'][$key2]['correct']==0) {
-                    $questions[$key]['options'][$key2]['correct'] = false;
-                }else{
-                    $questions[$key]['options'][$key2]['correct'] = true;
-                }
+           $questions[$key]['options'][1] = array(
+                'description' => $value['option2'], 
+                'correct' => false, 
+            );
+
+           $questions[$key]['options'][2] = array(
+                'description' => $value['option3'], 
+                'correct' => false, 
+            );
+
+           $questions[$key]['options'][3] = array(
+                'description' => $value['option4'], 
+                'correct' => false, 
+            );
+
+            if($questions[$key]['correct'] == 1){
+                $questions[$key]['options'][0]['correct'] = true;
+            }else if($questions[$key]['correct'] == 2){
+                $questions[$key]['options'][1]['correct'] = true;
+            }else if($questions[$key]['correct'] == 3){
+                $questions[$key]['options'][2]['correct'] = true;
+            }else if ($questions[$key]['correct'] == 4) {
+                $questions[$key]['options'][3]['correct'] = true;
             }
 
         }

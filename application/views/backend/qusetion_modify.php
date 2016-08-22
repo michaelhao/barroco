@@ -8,14 +8,45 @@ $id=$this->input->get("id");
 $row=$this->db->get_where('question', array(
 	'id' => $id,
 	))->row_array();
-// p($row);
+ // p($row);
+// p($row['correct']);
 
-$question_options=$this->db->order_by('id', 'desc')->get_where('question_option', array(
-	'question_id' => $row['id'],
-	'recover' => 0,
-))->result_array();
+$correctOption = array(
+	    array(
+	            'id' => 'radio_button_1',
+	            'value' => 1,
+	            'label' => '選項一',
+	            
+	    ),
+	    array(
+	            'id' => 'radio_button_2',
+	            'value' => 2,
+	            'label' => '選項二',
+	            
+	    ),
+	    array(
+	            'id' => 'radio_button_3',
+	            'value' => 3,
+	            'label' => '選項三',
+	            
+	    ),
+	    array(
+	            'id' => 'radio_button_4',
+	            'value' => 4,
+	            'label' => '選項四',
+	            
+	    ),
+);
 
-
+if($row['correct'] == 1){
+ 	$correctOption[0]['checked'] = true;
+}else if($row['correct'] == 2){
+ 	$correctOption[1]['checked'] = true;
+}else if($row['correct'] == 3){
+	$correctOption[2]['checked'] = true;
+}else if ($row['correct'] == 4) {
+	$correctOption[3]['checked'] = true;
+}
 ?>
 
 <!-- 表單開始 -->
@@ -81,28 +112,7 @@ echo $this->form_builder->build_form_horizontal(
 	        'id' => 'correct',
 	        'label' => '正確選項:',
 	        'type' => 'radio',
-	        'options' => array(
-                                array(
-                                        'id' => 'radio_button_yes',
-                                        'value' => 1,
-                                        'label' => '選項一'
-                                ),
-                                array(
-                                        'id' => 'radio_button_no',
-                                        'value' => 2,
-                                        'label' => '選項二'
-                                ),
-                                array(
-                                        'id' => 'radio_button_yes',
-                                        'value' => 3,
-                                        'label' => '選項三'
-                                ),
-                                array(
-                                        'id' => 'radio_button_yes',
-                                        'value' => 4,
-                                        'label' => '選項四'
-                                ),
-                        ),
+	        'options' => $correctOption,
 	        'class' => 'required',
 	    ), 
 	    array(
