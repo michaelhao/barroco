@@ -13,7 +13,6 @@ class Api extends CI_Controller
             'recover' =>0,
             'display' =>1,
         ))->result_array();
-         // p($this->db->last_query());
 
         //抓取圖片的method
         $CI =& get_instance();
@@ -79,17 +78,6 @@ class Api extends CI_Controller
         );
         //加入哪個資料庫
         $this->db->insert('score', $input); 
-        // $insert_last_id = $this->db->insert_id();
-
-        // $this->db->where('id', $insert_last_id);
-        // $this->db->update('score',$input);
-
-        // flashSuccess('新增資料成功。');
-
-        // 導回原本的頁面
-        // $panel= $this->input->post("panel");
-        // $row=select_submenu($panel);
-        // redirect($row["link"], 'refresh');
     }
 
     //排行榜紀錄前十位就好
@@ -104,7 +92,6 @@ class Api extends CI_Controller
         //輸出結果
         //時間格式  'time':'105.08/22 15:02'  
         foreach ($ranks as $key => $rank) {
-            // $ranks[$key]['time'] = date("Y.m/d H:i", strtotime($rank['created_at']));
             $time = date("Y.m/d H:i", strtotime($rank['created_at']));
             $changeYear = explode(".", $time);
             $ranks[$key]['time'] = ($changeYear[0]-1911).".".$changeYear[1];

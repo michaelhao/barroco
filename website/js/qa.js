@@ -322,8 +322,8 @@ $(function(){
 	var answered=false;//button was clicked
 	var gameTime=15;//Set the length of time
 	var gameOver=false;
-	var name='王小明';//從login.js接進來
-	var school='中崙國中';
+	var name=$.session.get("name");//從login.js接進來
+	var school=$.session.get("school");
 	var time='105.08/22 15:02';
 
 	function qaGame(data){

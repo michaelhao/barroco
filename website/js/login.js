@@ -51,6 +51,8 @@ $(function(){
 		inputCheck('name');
 		userName=$('#name').val();
 		userSchool=$('#school').val();
+		$.session.set("name", userName);
+		$.session.set("school", userSchool);
 
 		var schoolInput=$('#school').val().length;
 		var nameInput=$('#name').val().length;
