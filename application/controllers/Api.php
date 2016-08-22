@@ -100,7 +100,12 @@ class Api extends CI_Controller
             'type' => $this->input->get('type'),
             'recover' =>0,
         ), 10)->result_array();
+
         //輸出結果
+        //時間格式  'time':'105.08/22 15:02'  
+        foreach ($ranks as $key => $rank) {
+            // $ranks[$key]['time'] = date("y.m/d H:m", $rank['created_at']);
+        }
         echo json_encode($ranks);
         exit;
     }

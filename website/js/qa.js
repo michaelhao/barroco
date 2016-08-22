@@ -1,5 +1,13 @@
 $(function(){
-	var questions=[
+	//----api要十題題目----
+	var questions;
+	$.post("http://localhost/fc/barroco/index.php/api/questions", function(data){
+		questions = JSON.parse(data);
+		console.log(questions);
+		qaGame(questions);//開始快問快答
+	});
+	//----api要十題題目----
+	var question=[
 	  {
 	    "description": "第二次世界大戰誰沒有參加",
 	    "pic": "imgs/qa_pic1.jpg",
@@ -241,6 +249,7 @@ $(function(){
 	    ]
 	  }
 	];
+	
 	var scoreData=[
 		{
 			'school':'甌八瑪',
@@ -313,7 +322,7 @@ $(function(){
 	var answered=false;//button was clicked
 	var gameTime=15;//Set the length of time
 	var gameOver=false;
-	var name='王小明';
+	var name='王小明';//從login.js接進來
 	var school='中崙國中';
 	var time='105.08/22 15:02';
 
@@ -386,7 +395,7 @@ $(function(){
 				$('#fail')[0].pause();
 				$('#win')[0].currentTime = 0;
 				$('#fail')[0].currentTime = 0;
-				if(idNum > qaLength){
+				if(idNum > qaLength){//題數超過遊戲結束
 					gameOver();
 					idNum=0;
 					return false;
@@ -414,7 +423,7 @@ $(function(){
 		};
 		
 		//question images resize
-		$('img').imagesLoaded().done( function() {
+		// $('img').imagesLoaded().done( function() {
 			for(var i=0;i<=$('.qaList li').length;i++){
 				var qaPic=$('#q'+i+' .qaPic img');
 				var qaPicBox=$('#q'+i+' .qaPic');
@@ -429,11 +438,30 @@ $(function(){
 			};
 			$('#q0').show();//show first question
 			timer(gameTime,idNum);//timer start
-		});
+		// });
 		
 		//game over show score list
 		function gameOver(){
-			scoreList(scoreData,name,school,userScore);
+			//----遊戲結束，儲存分數----
+			var score = {
+				'type' : 11,
+				'school' : school,
+				'name' : name,
+				'score' : userScore
+			}
+			$.post("http://localhost/fc/barroco/index.php/api/insert_score", score, function(data){
+				console.log("儲存分數");
+			});
+			//----遊戲結束，儲存分數----
+			//----api要前十排行榜----
+			var scoreDatas;
+			$.get("http://localhost/fc/barroco/index.php/api/rank?type=11", function(data){
+				scoreDatas = JSON.parse(data);
+				console.log(scoreDatas);
+				scoreList(scoreDatas,name,school,userScore);//
+			});
+			//----api要前十排行榜----
+			
 		};
 		console.log(answerA);
 	};
@@ -447,7 +475,7 @@ $(function(){
  			'score':userScore,
  			'time':time
  		};
- 		console.log(qaData);
+ 		console.log(qaData);//要回傳rank的資料
  		$('#qaGame').hide();
 		$('body').addClass('bg4');
 		$('#scoreList').show();
@@ -458,7 +486,7 @@ $(function(){
 			'titleShow' : false,
 			'padding' : 0
 		});
-		$('.ScoreCloseBtn').click(function(){
+		$('.ScoreCloseBtn').click(function(){//查看英雄榜的按鈕，可能會被拿掉。
 			$.fancybox.close();
 		});
 		for(var i=0;i<=9;i++){
@@ -482,5 +510,5 @@ $(function(){
  		time = yearOfTaiwan+'.'+twoDigitMonth+'/'+twoDigitDate+' '+twoDigitHours+':'+twoDigitMinutes;
 	};
 
-	qaGame(questions);
+	// qaGame(question);
 });
