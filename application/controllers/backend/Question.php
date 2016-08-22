@@ -60,8 +60,14 @@ class Question extends CI_Controller {
 	{
 		// 寫入資料庫
 		$input = array( 
-			'created_at' => date('Y-m-d H:i:s'), 
-			'description' => $this->input->post('description'), 
+			'created_at' => date('Y-m-d H:i:s'),
+			'pic_explan'=> $this->input->post('pic_explan'), 
+			'description' => $this->input->post('description'),
+			'option1'=> $this->input->post('option1'), 
+			'option2'=> $this->input->post('option2'), 
+			'option3'=> $this->input->post('option3'), 
+			'option4'=> $this->input->post('option4'), 
+			'correct'=> $this->input->post('correct'), 
 			'display' => 1,
 			'sort' => 0,
 		);
@@ -98,11 +104,15 @@ class Question extends CI_Controller {
 	{
 		// 寫入資料庫
 		$input = array(
-			'updated_at' => $this->input->post('updated_at'), 
-			'description' => $this->input->post('description'), 
-			'display' => $this->input->post('display'),
-			'recover' => $this->input->post('recover'),
-			'sort' => $this->input->post('sort'),
+			'updated_at' => $this->input->post('updated_at'),
+			'pic_explan'=> $this->input->post('pic_explan'),
+			'description' => $this->input->post('description'),
+			'option1'=> $this->input->post('option1'), 
+			'option2'=> $this->input->post('option2'), 
+			'option3'=> $this->input->post('option3'), 
+			'option4'=> $this->input->post('option4'), 
+			'correct'=> $this->input->post('correct'),
+			'display' => $this->input->post('display')
 		);
 		$this->db->where('id', $this->input->post("id"));
 		$this->db->update('question', $input); 
