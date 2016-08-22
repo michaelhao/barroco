@@ -324,7 +324,7 @@ $(function(){
 	var gameOver=false;
 	var name=$.session.get("name");//從login.js接進來
 	var school=$.session.get("school");
-	var time='105.08/22 15:02';
+	// var time='105.08/22 15:02';
 
 	function qaGame(data){
 		$('#scoreList').hide();
@@ -389,7 +389,7 @@ $(function(){
 			qaId.find('.'+qaA+' a').css({background:'#f00',fontSize:'40px',padding:'10px'});//just for answer style
 			setTimeout(function(){
 				if(idNum >= qaLength){
-					gameOver();
+					// gameOver();
 					idNum=qaLength;
 					$('.winName').text(name);
  					$('.scoreNum').text(userScore);
@@ -421,7 +421,7 @@ $(function(){
 		$('.ScoreCloseBtn').click(function(){
 			$.fancybox.close();
 			idNum=0;
-			// gameOver();
+			gameOver();
 		});
 		$('.fancybox-close').click(function(){
 			window.location.assign('select.html');
@@ -494,7 +494,7 @@ $(function(){
  			'name':name,
  			'school':school,
  			'score':userScore,
- 			'time':time
+ 			// 'time':time
  		};
  		console.log(qaData);//要回傳rank的資料
  		$('#qaGame').hide();
