@@ -129,9 +129,9 @@ $(function(){
 	var mapLength=4;//question length 0~9 total 10 list
 	var userScore=0;
 	var idNum=0;//in which one question, now
-	var name='王小明';
-	var school='中崙國中';
-	var time='105.08/22 15:02';
+	var name=$.session.get("name");//從login.js接進來
+	var school=$.session.get("school");
+	// var time='105.08/22 15:02';
 
 	function mapGame(data){
 		$('#scoreList').hide();
@@ -231,6 +231,7 @@ $(function(){
 			if(idNum<4){
 				$('.mapNextBtn').show();
 			}else{
+				// gameOver();
 				//$('.mapScoreBtn').show();
 				$('.winName').text(name);
  				$('.scoreNum').text(userScore);
@@ -253,12 +254,30 @@ $(function(){
 
 		//game over show score list
 		function gameOver(){
-			scoreList(scoreData,name,school);
+			//----遊戲結束，儲存分數----
+			var score = {
+				'type' : 12,
+				'school' : school,
+				'name' : name,
+				'score' : userScore
+			}
+			$.post("http://localhost/fc/barroco/index.php/api/insert_score", score, function(data){
+				console.log("儲存分數");
+				//----api要前十排行榜----
+				var scoreDatas;
+				$.get("http://localhost/fc/barroco/index.php/api/rank?type=12", function(data2){
+					scoreDatas = JSON.parse(data2);
+					console.log(scoreDatas);
+					scoreList(scoreDatas,name,school);
+				});
+				//----api要前十排行榜----
+			});
+			//----遊戲結束，儲存分數----
 		};
 	};
 
 	//score events
-	function scoreList(data,name,school,scoreNum){
+	function scoreList(data,name,school){
 		$('#win')[0].pause();
 		$('#fail')[0].pause();
 		$('#win')[0].currentTime = 0;
@@ -268,7 +287,7 @@ $(function(){
  			'name':name,
  			'school':school,
  			'score':userScore,
- 			'time':time
+ 			// 'time':time
  		};
  		console.log(mapData);
  		$('#mapGame').hide();
