@@ -96,7 +96,7 @@ class Api extends CI_Controller
     public function rank(){
         //抓出score的資料
         //使用type類別進行分數排列
-        $ranks=$this->db->select('name, school, score, created_at')->order_by('score','desc')->get_where('score', array(
+        $ranks=$this->db->select('name, school, score, MAX(created_at) AS created_at')->group_by(array('school' , 'name', 'score'))->order_by('score','desc')->get_where('score', array(
             'type' => $this->input->get('type'),
             'recover' =>0,
         ), 10)->result_array();
