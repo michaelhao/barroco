@@ -23,51 +23,82 @@ echo $this->form_builder->build_form_horizontal(
 	        'value' => $this->input->get('id')
 	    ),
 	    array(
-	        'id' => 'question_id',
-	        'type' => 'hidden',
-	        'value' => $this->input->get('id')
-	    ),
-	    array(
 	        'id' => 'panel',
 	        'type' => 'hidden',
-	        'value' => $this->input->get('ipanel')
+	        'value' => $this->input->get('mpanel')
 	    ),
-	    // array(
-	    //     'id' => 'name',
-	    //     'label' => '標題:',
-	    //     'class' => 'required',
-	    // ),
 	    array(
 	        'id' => 'pic',
 	        'type' => 'html',
 	        'label' => '主圖(H300XW203):',
 	        'html' => get_single_fileupload_html(0),
 	    ),
-	    // array(
-	    //     'id' => 'start_at',
-	    //     'label' => '文章時間:',
-	    //     'class' => 'required datepicker',
-	    // ),
+	    array(
+	        'id' => 'pic_explan',
+	        'label' => '圖片說明:',
+	    ), 
 	    array(
 	        'id' => 'description',
 	        'label' => '簡述:',
 	        'type' => 'textarea',
 	        'class' => 'required',
-	    ),
-	    // array(
-	    //     'id' => 'content',
-	    //     'type' => 'textarea',
-	    //     'label' => '內頁內容:',
-	    //     'class' => 'required ckeditor'
-	    // ),
+	    ), 
 	    array(
-	        'id' => 'show',
+	        'id' => 'option1',
+	        'label' => '選項一:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'option2',
+	        'label' => '選項二:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'option3',
+	        'label' => '選項三:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'option4',
+	        'label' => '選項四:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'correct',
+	        'label' => '正確選項:',
+	        'type' => 'radio',
+	        'options' => array(
+                                array(
+                                        'id' => 'radio_button_yes',
+                                        'value' => 1,
+                                        'label' => '選項一'
+                                ),
+                                array(
+                                        'id' => 'radio_button_no',
+                                        'value' => 2,
+                                        'label' => '選項二'
+                                ),
+                                array(
+                                        'id' => 'radio_button_yes',
+                                        'value' => 3,
+                                        'label' => '選項三'
+                                ),
+                                array(
+                                        'id' => 'radio_button_yes',
+                                        'value' => 4,
+                                        'label' => '選項四'
+                                ),
+                        ),
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'display',
 	        'type' => 'dropdown',
 	        'label' => '上架狀態:',
 	        'class' => 'required select',
 	        'options' => array( 1=>'顯示', 2 =>'隱藏'),
 	    ),
-	), $row);
+), $row);
 ?>
 
 <?php
