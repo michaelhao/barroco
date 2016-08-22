@@ -48,9 +48,61 @@ echo $this->form_builder->build_form_horizontal(
 	        'html' => get_single_fileupload_html(0),
 	    ),
 	    array(
+	        'id' => 'pic_explan',
+	        'label' => '圖片說明:',
+	    ), 
+	    array(
 	        'id' => 'description',
 	        'label' => '簡述:',
 	        'type' => 'textarea',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'option1',
+	        'label' => '選項一:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'option2',
+	        'label' => '選項二:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'option3',
+	        'label' => '選項三:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'option4',
+	        'label' => '選項四:',
+	        'class' => 'required',
+	    ), 
+	    array(
+	        'id' => 'correct',
+	        'label' => '正確選項:',
+	        'type' => 'radio',
+	        'options' => array(
+                                array(
+                                        'id' => 'radio_button_yes',
+                                        'value' => 1,
+                                        'label' => '選項一'
+                                ),
+                                array(
+                                        'id' => 'radio_button_no',
+                                        'value' => 2,
+                                        'label' => '選項二'
+                                ),
+                                array(
+                                        'id' => 'radio_button_yes',
+                                        'value' => 3,
+                                        'label' => '選項三'
+                                ),
+                                array(
+                                        'id' => 'radio_button_yes',
+                                        'value' => 4,
+                                        'label' => '選項四'
+                                ),
+                        ),
 	        'class' => 'required',
 	    ), 
 	    array(
@@ -67,87 +119,3 @@ echo $form_end_button;
 echo $this->form_builder->close_form();
 ?>
 <!-- 表單結束 -->
-<?php 
-$row_submenu_2=select_submenu(23);			
-$name2=$row_submenu_2["name"];
-$insert=$row_submenu_2["insertlink"];
-$modify=$row_submenu_2["modifylink"];
-$link=$row_submenu_2["link"];
-$recover=$row_submenu_2["recoverlink"];
-$type=$row_submenu_2["typelink"];
-?>
-
-
-<?php if (substr($row['id'],-4,4) != "0000") { ?>
-
-	<BR>
-	<BR>
-	<div class="panel-heading">
-		<h6 class="panel-title"><i class="icon-table"></i><?=$name2?>列表</h6>	
-		<a href="<?=$insert?>&question_id=<?=$this->input->get('id')?>" class="btn btn-success pull-right"><span class="icon-plus"></span> <?=$name2;?>新增</a>
-
-	</div>
-	
-	<!--Datatable with tools menu -->
-	<div class="datatable-tools2">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>題目選項</th>
-				<th>是否正確</th>
-				<th>功能</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-			foreach ($question_options as $key => $question_option) {
-			?>
-				<tr>
-					<td><?=$question_option['description']?></td>
-					<td>
-
-						<?php if ($question_option['correct'] == 1) { ?>
-								<a href='###' id='open<?=$question_option["id"]?>' class='btn btn-success rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','open')">
-								<span class='icon-user-plus2'></span>正確</a>
-
-								<a style = "display:none" href='###' id='close<?=$question_option["id"]?>' class='btn btn-danger rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','close')">
-								<span class='icon-user-plus2'></span>不正確</a>
-								
-							<?php }else{ ?>
-
-								<a style = "display:none" href='###' id='open<?=$question_option["id"]?>' class='btn btn-success rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','open')">
-								<span class='icon-user-plus2'></span>正確</a>
-
-								<a href='###' id='close<?=$question_option["id"]?>' class='btn btn-danger rightCHK' onclick="showUrl1('question_option/correct','<?=$question_option["id"]?>','close')">
-								<span class='icon-user-plus2'></span>不正確</a>
-							<?php } ?>
-						
-					</td>
-
-					<td>
-							<div class="btn-group" >
-								<a href="<?=$modify . "&id=" . $question_option["id"];?>" class="btn btn-icon btn-danger modifybu"><i class="icon-wrench2"></i></a>
-							</div>
-							<div class="btn-group delete">
-								<a onclick="delete_detail('<?php echo "question_option/delete_detail?panel=".$this->input->get('mpanel')."&id=".$question_option["id"];?>')" href="#" class="btn btn-icon btn-success modifybu"><i class="icon-remove"></i></a>
-							</div>
-						</td>
-				</tr>
-
-			<?php
-			}
-			?>
-		</tbody>
-	</table>
-</div>
-
-<?php } ?>
-
-<script>
-function delete_detail(url) 
-{ 
-	if (confirm("確認是否要刪除資料。")) {
-		window.location.href = url;
-	}
-}
-</script>
